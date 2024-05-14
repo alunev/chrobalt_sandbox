@@ -16,4 +16,3 @@ ENV SCCACHE_GCS_BUCKET=githubactions-chrome-sccache
 ENV SCCACHE_GCS_RW_MODE=READ_WRITE
 ENV SCCACHE_GCS_KEY_PATH=/root/key.json
 ENV SCCACHE_GCS_SERVICE_ACCOUNT=github-actions-bucket-access@cobalt-demo-330821.iam.gserviceaccount.com
-
