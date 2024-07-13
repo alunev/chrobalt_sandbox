@@ -19,8 +19,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    #- name: Dump context
-    #  uses: crazy-max/ghaction-dump-context@v2
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
     - name: Login to GitHub Container Registry
@@ -54,17 +52,14 @@ jobs:
       SCCACHE_GCS_SERVICE_ACCOUNT: runner@cobalt-actions-devel.iam.gserviceaccount.com
       SCCACHE_GCS_RW_MODE: READ_WRITE
       SCCACHE_IDLE_TIMEOUT: 0 # prevent sccache server from shutting down after long idle.
-      BUILD_DIR: out/Default
+      BUILD_DIR: out/android-arm64_qa
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           path: src
-      # - name: Dump context
-      #   uses: crazy-max/ghaction-dump-context@v2
       - name: Get depot tools
-        # run: git clone -b dev https://github.com/kaidokert/depot_tools.git
         run: git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
       - name: Add directory to PATH
         run: echo "$GITHUB_WORKSPACE/depot_tools" >> $GITHUB_PATH
@@ -86,9 +81,7 @@ jobs:
       - name: gn gen
         run: |
           cd src
-          mkdir -p ${BUILD_DIR}
-          cp chrobalt/android/args.gn ${BUILD_DIR}
-          gn gen ${BUILD_DIR}
+          chrobalt/build/gn.py -p android-arm64 -C qa --no-check
       - name: gn dump args
         run: |
           cd src
@@ -121,7 +114,6 @@ jobs:
         run: |
           cd src
           ninja -C ${BUILD_DIR} gpu_unittests
-      # V8 utility stuff
       - name: ninja gin_unittests
         run: |
           cd src
@@ -134,6 +126,10 @@ jobs:
         run: |
           cd src
           ninja -C ${BUILD_DIR} content_shell
+      - name: ninja system_webview_apk
+        run: |
+          cd src
+          ninja -C ${BUILD_DIR} system_webview_apk
       - name: sccache check
         run: sccache -s
       - name: Any speed

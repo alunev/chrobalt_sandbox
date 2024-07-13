@@ -1,4 +1,2 @@
-cc_wrapper = "sccache"
-symbol_level = 0
 target_os = "android"
 target_cpu = "arm64"
