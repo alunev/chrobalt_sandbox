@@ -4,6 +4,7 @@ FROM debian:12
 # Install any necessary dependencies
 # NOTE: From libxcomposite down, these are minimal requirements to run a
 # V8 snapshot binary, on X11/GTK builds
+#     gcc-multilib  for cross-builds of v8/32bit arm
 RUN apt-get update && apt-get install -y \
     curl python3-dev git \
     xz-utils \
@@ -22,6 +23,8 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     libxkbcommon0 \
     libpango-1.0-0 \
+    gcc-multilib \
+    bzip2 \
     && rm -rf /var/lib/apt/lists/*
 
 ADD files/sccache /usr/local/bin
