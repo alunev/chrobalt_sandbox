@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/chromeos/ui_mode.gni")
+import("//pdf/features.gni")
 
 # Contained Lens dependencies are currently for desktop platforms only
 assert(!is_android, "Lens Overlay is for desktop platforms only")
@@ -186,7 +187,6 @@ source_set("browser_tests") {
     "//base/test:test_support",
     "//chrome/browser",
     "//chrome/browser/lens/core/mojom:mojo_bindings",
-    "//chrome/browser/pdf",
     "//chrome/browser/profiles:profile",
     "//chrome/browser/sync",
     "//chrome/browser/themes",
@@ -207,7 +207,6 @@ source_set("browser_tests") {
     "//content/test:test_support",
     "//mojo/public/cpp/bindings",
     "//net",
-    "//pdf:features",
     "//ui/base",
     "//ui/base:types",
     "//ui/compositor",
@@ -217,6 +216,12 @@ source_set("browser_tests") {
     "//ui/views/controls/webview",
     "//url",
   ]
+  if(enable_pdf) {
+    deps += [
+      "//chrome/browser/pdf",
+      "//pdf:features",
+    ]
+  }
 }
 
 source_set("interactive_ui_tests") {
