@@ -1,4 +1,4 @@
-name: Docker Build
+name: Android build
 
 on:
   pull_request:
@@ -71,9 +71,9 @@ jobs:
       - name: Generate gclient file
         run: gclient config --name=src https://github.com/${{ github.repository }}
       - name: Set target OS
+        # echo "target_os_only=True" >> .gclient
         run: |
           echo "target_os=['android']" >> .gclient
-          echo "target_os_only=True" >> .gclient
           gclient validate
       - name: Gclient sync
         run: gclient sync -v --shallow --no-history -r ${{ github.sha }}

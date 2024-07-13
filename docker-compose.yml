@@ -2,7 +2,7 @@ version: '3.8'
 services:
   app:
     build:
-      context: docker/linux
+      context: chrobalt/docker/linux
       cache_from:
         - ghcr.io/youtube/chrobalt_sandbox/linux:latest
     image: ghcr.io/youtube/chrobalt_sandbox/linux:latest

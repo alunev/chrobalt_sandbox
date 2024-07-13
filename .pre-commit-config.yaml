@@ -6,7 +6,6 @@ files: |
         (
             .github|
             chrobalt|
-            docker|
         )
     )
 
