@@ -130,6 +130,10 @@ jobs:
         run: |
           cd src
           ninja -C ${BUILD_DIR} system_webview_apk
+      - name: ninja system_webview_shell_apk
+        run: |
+          cd src
+          ninja -C ${BUILD_DIR} system_webview_shell_apk
       - name: sccache check
         run: sccache -s
       - name: Any speed
