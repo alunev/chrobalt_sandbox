@@ -134,7 +134,15 @@ jobs:
         run: |
           cd src
           ninja -C ${BUILD_DIR} system_webview_shell_apk
+      - name: ninja trichrome_webview_apk
+        run: |
+          cd src
+          ninja -C ${BUILD_DIR} trichrome_webview_apk
       - name: sccache check
         run: sccache -s
       - name: Any speed
         run: echo Any speed
+      - name: Check for apks
+        run: |
+          cd src
+          find ${BUILD_DIR} -type d -iname "*.apk"
