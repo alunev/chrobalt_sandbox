@@ -134,6 +134,10 @@ jobs:
         run: |
           cd src
           ninja -C ${BUILD_DIR} system_webview_shell_apk
+      - name: ninja monochrome_public_apk
+        run: |
+          cd src
+          ninja -C ${BUILD_DIR} monochrome_public_apk
       - name: ninja trichrome_webview_apk
         run: |
           cd src
@@ -145,4 +149,10 @@ jobs:
       - name: Check for apks
         run: |
           cd src
-          find ${BUILD_DIR} -type d -iname "*.apk"
+          find ${BUILD_DIR} -type f -iname "*.apk"
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: APKs
+          path: |
+            src/out/android-arm64_qa/apks/*.apk
