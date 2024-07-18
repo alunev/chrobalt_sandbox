@@ -166,3 +166,7 @@ exec_script_whitelist =
       "//tools/grit/grit_rule.gni",
       "//tools/gritsettings/BUILD.gn",
     ]
+
+exec_script_whitelist += [
+  "//starboard/tools/BUILD.gn",
+]
