@@ -1,10 +1,10 @@
-sb_api_version = 17
+sb_api_version = 16
 sb_is_evergreen = false
 sb_is_evergreen_compatible = false
 has_platform_targets = false
 sb_filter_based_player = false
 sb_enable_benchmark = false
-starboard_toolchain = default_toolchain
+starboard_toolchain = "//starboard/build/toolchain:starboard"
 cobalt_toolchain = default_toolchain
 is_internal_build = false
 starboard_path = "starboard/linux/x64x11"
