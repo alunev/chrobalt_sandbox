@@ -222,6 +222,8 @@ class CORE_EXPORT Performance : public EventTargetWithInlineData {
 
   void AddSoftNavigationToPerformanceTimeline(SoftNavigationEntry*);
 
+  std::string eventsToString(const base::circular_deque<std::string>& events);
+
   PerformanceMark* mark(ScriptState*,
                         const AtomicString& mark_name,
                         PerformanceMarkOptions* mark_options,

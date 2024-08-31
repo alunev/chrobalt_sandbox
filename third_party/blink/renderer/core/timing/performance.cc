@@ -33,6 +33,7 @@
 
 #include <algorithm>
 
+#include "components/breadcrumbs/core/breadcrumb_manager.h"
 #include "base/containers/contains.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task/single_thread_task_runner.h"
@@ -924,10 +925,30 @@ UserTiming& Performance::GetUserTiming() {
   return *user_timing_;
 }
 
+std::string Performance::eventsToString(const base::circular_deque<std::string>& events) {
+  std::string breadcrumbs_string;
+
+  // Concatenate breadcrumbs backwards, putting new breadcrumbs at the front, so
+  // that the most relevant (i.e., newest) breadcrumbs are at the top in Crash.
+  for (const std::string& breadcrumb : (events)) {
+    breadcrumbs_string += breadcrumb;
+    breadcrumbs_string += "; ";
+  }
+
+  return breadcrumbs_string;
+}
+
 PerformanceMark* Performance::mark(ScriptState* script_state,
                                    const AtomicString& mark_name,
                                    PerformanceMarkOptions* mark_options,
                                    ExceptionState& exception_state) {
+  LOG(INFO) << "PerformanceMark::Create: " << mark_name;
+
+  LOG(INFO) << "add_breadcrumb: " << mark_name;
+  breadcrumbs::BreadcrumbManager::GetInstance().AddEvent(mark_name.Ascii());
+
+  LOG(INFO) << "breadcrumbs_buffer: " << Performance::eventsToString(breadcrumbs::BreadcrumbManager::GetInstance().GetEvents());
+
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const AtomicString, mark_fully_loaded,
                                   ("mark_fully_loaded"));
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const AtomicString, mark_fully_visible,

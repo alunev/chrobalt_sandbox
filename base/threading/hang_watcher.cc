@@ -192,7 +192,7 @@ constexpr base::FeatureParam<int> kRendererProcessIOThreadLogLevel{
     static_cast<int>(LoggingLevel::kUmaOnly)};
 constexpr base::FeatureParam<int> kRendererProcessMainThreadLogLevel{
     &kEnableHangWatcher, "renderer_process_main_thread_log_level",
-    static_cast<int>(LoggingLevel::kUmaOnly)};
+    static_cast<int>(LoggingLevel::kUmaAndCrash)};
 constexpr base::FeatureParam<int> kRendererProcessThreadPoolLogLevel{
     &kEnableHangWatcher, "renderer_process_threadpool_log_level",
     static_cast<int>(LoggingLevel::kUmaOnly)};
@@ -692,7 +692,7 @@ void HangWatcher::WatchStateSnapShot::Init(
 
   const base::TimeTicks now = base::TimeTicks::Now();
   bool all_threads_marked = true;
-  bool found_deadline_before_ignore_threshold = false;
+//  bool found_deadline_before_ignore_threshold = false;
 
   // Use an std::array to store the hang counts to avoid allocations. The
   // numerical values of the HangWatcher::ThreadType enum is used to index into
@@ -715,9 +715,9 @@ void HangWatcher::WatchStateSnapShot::Init(
     TimeTicks deadline;
     std::tie(flags, deadline) = watch_state->GetFlagsAndDeadline();
 
-    if (deadline <= deadline_ignore_threshold) {
-      found_deadline_before_ignore_threshold = true;
-    }
+//    if (deadline <= deadline_ignore_threshold) {
+//      found_deadline_before_ignore_threshold = true;
+//    }
 
     if (internal::HangWatchDeadline::IsFlagSet(
             internal::HangWatchDeadline::Flag::kIgnoreCurrentWatchHangsInScope,
@@ -802,10 +802,12 @@ void HangWatcher::WatchStateSnapShot::Init(
   // 3. The hung threads found were all of types that are not configured through
   // Finch to trigger a crash dump.
   //
-  if (!all_threads_marked || found_deadline_before_ignore_threshold ||
+  LOG(INFO) << "snapshot_init";
+  if (!all_threads_marked ||
       !any_hung_thread_has_dumping_enabled) {
-    hung_watch_state_copies_.clear();
-    return;
+    LOG(INFO) << "skipping hung_watch_state_copies_.clear()";
+    // hung_watch_state_copies_.clear();
+    // return;
   }
 
   // Sort |hung_watch_state_copies_| by order of decreasing hang severity so the
@@ -883,6 +885,7 @@ void HangWatcher::Monitor() {
 
 void HangWatcher::DoDumpWithoutCrashing(
     const WatchStateSnapShot& watch_state_snapshot) {
+  LOG(INFO) << "doDumpWithoutCrashing";
   TRACE_EVENT("base", "HangWatcher::DoDumpWithoutCrashing");
 
   capture_in_progress_.store(true, std::memory_order_relaxed);
