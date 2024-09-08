@@ -772,6 +772,7 @@ static_idl_files_in_modules = get_path_info(
           "//third_party/blink/renderer/modules/wake_lock/wake_lock.idl",
           "//third_party/blink/renderer/modules/wake_lock/wake_lock_sentinel.idl",
           "//third_party/blink/renderer/modules/wake_lock/worker_navigator_wake_lock.idl",
+          "//third_party/blink/renderer/modules/watchdog/watchdog.idl",
           "//third_party/blink/renderer/modules/webaudio/analyser_node.idl",
           "//third_party/blink/renderer/modules/webaudio/analyser_options.idl",
           "//third_party/blink/renderer/modules/webaudio/audio_buffer.idl",
