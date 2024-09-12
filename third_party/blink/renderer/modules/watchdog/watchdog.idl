@@ -5,5 +5,5 @@
 [
     Exposed=Window
 ] interface Watchdog {
-    static boolean status();
+//    static boolean status();
 };

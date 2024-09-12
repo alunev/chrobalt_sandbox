@@ -229,7 +229,9 @@ void ModulesInitializer::Initialize() {
   ThreadScheduler::Current()->InitializeTaskAttributionTracker(
       std::make_unique<scheduler::TaskAttributionTrackerImpl>());
 
-  Watchdog::Init();
+
+//  blink::Watchdog::GetInstance().Initialize();
+//  Watchdog::Initialize();
 }
 
 void ModulesInitializer::InitLocalFrame(LocalFrame& frame) const {

@@ -6,9 +6,29 @@ import("//third_party/blink/renderer/modules/modules.gni")
 
 blink_modules_sources("watchdog") {
   sources = [
+    "instrumentation_log.cc",
+    "instrumentation_log.h",
     "watchdog.cc",
     "watchdog.h",
   ]
 
-  deps = [ "//services/service_manager/public/cpp" ]
+  deps = [
+    "//base",
+    "//services/service_manager/public/cpp" ]
 }
+
+#target(gtest_target_type, "watchdog_test") {
+#  testonly = true
+#
+#  sources = [
+#    "instrumentation_log_test.cc",
+#    "watchdog_test.cc",
+#  ]
+#
+#  deps = [
+#    ":watchdog",
+#    "//cobalt/test:run_all_unittests",
+#    "//testing/gmock",
+#    "//testing/gtest",
+#  ]
+#}
