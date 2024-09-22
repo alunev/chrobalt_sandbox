@@ -5,5 +5,12 @@
 [
     Exposed=Window
 ] interface Watchdog {
-//    static boolean status();
+
+  static boolean Register(DOMString name, DOMString description,
+                   long long time_interval_milliseconds,
+                   long long time_wait_milliseconds);
+
+  static boolean ping(DOMString name, DOMString info);
+
+  static DOMString GetWatchdogViolations(sequence<DOMString> clients);
 };

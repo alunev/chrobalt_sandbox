@@ -8,6 +8,8 @@ blink_modules_sources("watchdog") {
   sources = [
     "instrumentation_log.cc",
     "instrumentation_log.h",
+    "watchdog_thread.cc",
+    "watchdog_thread.h",
     "watchdog.cc",
     "watchdog.h",
   ]
